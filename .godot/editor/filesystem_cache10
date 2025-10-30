@@ -1,0 +1,15 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1761853251
+icon.svg::CompressedTexture2D::1122951858212839581::1761848637::1761848643::1::::<><><>0<>0<>f486927e4d05587e788032e842f17385<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+::res://addons/::1761853224
+::res://addons/godot-git-plugin/::1761853224
+git_plugin.gdextension::GDExtension::4002093562273845095::1761853224::0::1::::<><><>0<>0<><>::
+plugin.cfg::TextFile::-1::1761853224::0::1::::<><><>0<>0<><>::
+THIRDPARTY.md::TextFile::-1::1761853224::0::1::::<><><>0<>0<><>::
+::res://addons/godot-git-plugin/linux/::1761853224
+::res://addons/godot-git-plugin/macos/::1761853224
+::res://addons/godot-git-plugin/win64/::1761853224
+::res://scenes/::1761853011
+TestScene.tscn::PackedScene::1061910393253522448::1761853011::0::1::::<><><>0<>0<><>::uid://p874ad4k50np::::res://icon.svg<>uid://cd8q2xqufoini::::res://scripts/test_scene.gd
+::res://scripts/::1761851440
+test_scene.gd::GDScript::5052553286173841570::1761851440::0::1::::TestScene<>Node2D<>res://icon.svg<>0<>0<><>::
