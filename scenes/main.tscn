@@ -63,6 +63,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23118019, -0.80653775)
 shape = SubResource("ConvexPolygonShape3D_tefeu")
 
 [node name="PickableObject" parent="." instance=ExtResource("3_sugp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29517567, -0.53376186)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PickableObject"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11985299, -0.17855787)
