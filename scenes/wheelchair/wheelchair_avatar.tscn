@@ -6,7 +6,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_1kb4e"]
 size = Vector3(2.6071777, 1.067627, 3.8112946)
 
-[node name="WheelchairAvatar" type="Node3D"]
+[node name="WheelchairAvatar" type="CharacterBody3D"]
 script = ExtResource("1_1kb4e")
 
 [node name="WheelchairModel" parent="." instance=ExtResource("1_08tkx")]
@@ -16,11 +16,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, -0.5)
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+current = true
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-collision_layer = 0
-collision_mask = 8
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.002319336, -1.2606201, -0.38014984)
 shape = SubResource("BoxShape3D_1kb4e")

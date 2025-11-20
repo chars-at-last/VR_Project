@@ -21,3 +21,7 @@ func rotate_wheels(amount_rad_front: float, amount_rad_back_left: float, amount_
 	front_wheels.rotate_x(amount_rad_front)
 	back_wheel_left.rotate_x(amount_rad_back_left)
 	back_wheel_right.rotate_x(amount_rad_back_right)
+
+# Rotate all by same amount
+func rotate_wheels_same(amount_rad: float) -> void:
+	return rotate_wheels(amount_rad, amount_rad, amount_rad)
