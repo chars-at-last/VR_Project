@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://cs6gjkdy8q6vv"]
+
+[ext_resource type="Script" uid="uid://d00h75smga5im" path="res://scripts/wheelchair/wheelchair_model.gd" id="1_3b43d"]
+[ext_resource type="PackedScene" uid="uid://dbtihod2biqpa" path="res://art/models/oar_chair_basic.glb" id="1_qjtg3"]
+[ext_resource type="PackedScene" uid="uid://bqeunh6d3arih" path="res://art/models/oar_wheel.glb" id="2_3b43d"]
+
+[node name="WheelchairModel" type="Node3D"]
+script = ExtResource("1_3b43d")
+
+[node name="Chair" parent="." instance=ExtResource("1_qjtg3")]
+
+[node name="BackWheels" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.5, -1)
+
+[node name="BackWheelLeft" parent="BackWheels" instance=ExtResource("2_3b43d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0, 0)
+
+[node name="BackWheelRight" parent="BackWheels" instance=ExtResource("2_3b43d")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.25, 0, 0)
+
+[node name="FrontWheels" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -1.25, 1)
+
+[node name="FrontWheelLeft" parent="FrontWheels" instance=ExtResource("2_3b43d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0, 0)
+
+[node name="FrontWheelRight" parent="FrontWheels" instance=ExtResource("2_3b43d")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.25, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.6039095, 0.19144645, -0.7737193, 0, 0.97072524, 0.24019288, 0.7970529, -0.14505477, 0.58623016, -4.2105474, 1.3071193, 3.1902394)
