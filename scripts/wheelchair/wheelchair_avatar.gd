@@ -6,6 +6,7 @@ class_name WheelchairAvatar extends CharacterBody3D
 # Constants
 const DEFAULT_ROTATION_AMOUNT: float = PI / 2
 const FRICTION: float = .1
+const ROTATION_FRICTION: float = 2
 
 # Variables
 @onready var model: WheelchairModel = $WheelchairModel
@@ -16,12 +17,14 @@ var direction: int = 0
 var rotation_vel_rad: float
 var rotate_left_sign: int = 0
 var rotate_right_sign: int = 0
+var pre_velocity: float = 0
 
 # Keyboard input - FOR TESTING ONLY !!!
 func keyboard_input(delta) -> void:
 	var speed: float = 6.67
 	rotate_left_sign = 0
 	rotate_right_sign = 0
+	pre_velocity = 0
 	
 	if Input.is_action_pressed("wheelchair_left"):
 		movement(speed, true, delta)
@@ -53,13 +56,15 @@ func reset() -> void:
 	rotation_vel_rad = 0
 
 func _physics_process(delta: float) -> void:
-	# Testing
+	## Testing 1 ##
 	#velocity = global_transform.basis.z * 200 * delta
 	#move_and_slide()
 	#rotate_around_point(false, delta)
 	
+	## Testing 2 ##
 	keyboard_input(delta)
 	
+	## Always-running movement funcitons ##
 	move_and_slide()
 	rotate_around_point(delta)
 	if velocity.length_squared() > 0:
@@ -84,23 +89,15 @@ func only_move(speed: float) -> void:
 
 # Rotate around point
 func rotate_around_point(delta: float) -> void:
-	#var mult: float
-	#var rot_amount_delta: float = rotation_vel_rad * delta
-	#
-	#if positive:
-		#mult = 1
-		#model.rotate_wheels_const(delta, 0, delta, direction_pos)
-	#else:
-		#model.rotate_wheels(delta, delta, 0, direction_pos)
-		#mult = -1
+	# Actual rotation
+	if not is_zero_approx(rotation_vel_rad):
+		self.rotate_y(rotation_vel_rad * delta)
+		self.rotation_vel_rad = sign(self.rotation_vel_rad) * maxf(0, absf(self.rotation_vel_rad) - ROTATION_FRICTION * delta)
 		
-	var rot_amount_delta: float = rotation_vel_rad * delta
-	if not is_zero_approx(rot_amount_delta):
-		self.rotate_y(rot_amount_delta)
-		
+	# Right wheel
 	if not is_zero_approx(rotate_right_sign):
 		model.rotate_wheels_const(delta, 1, rotate_right_sign, 0)
 	
+	# Left wheel
 	if not is_zero_approx(rotate_left_sign):
 		model.rotate_wheels_const(delta, 1, 0, rotate_left_sign)
-		
