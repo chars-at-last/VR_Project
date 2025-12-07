@@ -4,7 +4,7 @@ class_name WheelchairAvatar extends CharacterBody3D
 
 
 # Constants
-const DEFAULT_ROTATION_AMOUNT: float = PI * 30
+const DEFAULT_ROTATION_AMOUNT: float = PI / 2
 const FRICTION: float = .1
 
 # Variables
@@ -13,10 +13,15 @@ const FRICTION: float = .1
 @export var rotation_amount: float = DEFAULT_ROTATION_AMOUNT
 
 var direction: int = 0
+var rotation_vel_rad: float
+var rotate_left_sign: int = 0
+var rotate_right_sign: int = 0
 
 # Keyboard input - FOR TESTING ONLY !!!
 func keyboard_input(delta) -> void:
 	var speed: float = 6.67
+	rotate_left_sign = 0
+	rotate_right_sign = 0
 	
 	if Input.is_action_pressed("wheelchair_left"):
 		movement(speed, true, delta)
@@ -39,8 +44,13 @@ func keyboard_input(delta) -> void:
 		movement(-speed, false, delta)
 		
 	if (Input.is_action_just_released("wheelchair_left") or Input.is_action_just_released("wheelchair_right") or Input.is_action_just_released("wheelchair_left_rev") or Input.is_action_just_released("wheelchair_right_rev")) and not (Input.is_action_pressed("wheelchair_left") or Input.is_action_pressed("wheelchair_right") or Input.is_action_pressed("wheelchair_left_rev") or Input.is_action_pressed("wheelchair_right_rev")):
-		velocity = Vector3.ZERO
-		direction = 0
+		reset()
+
+# Resets some information
+func reset() -> void:
+	velocity = Vector3.ZERO
+	direction = 0
+	rotation_vel_rad = 0
 
 func _physics_process(delta: float) -> void:
 	# Testing
@@ -51,32 +61,46 @@ func _physics_process(delta: float) -> void:
 	keyboard_input(delta)
 	
 	move_and_slide()
+	rotate_around_point(delta)
 	if velocity.length_squared() > 0:
 		#print(velocity.length())
 		only_move(direction * (velocity.length() - FRICTION))
 	
 # Movement
-func movement(speed: float, positive: bool, delta: float) -> void:
+func movement(speed: float, left_wheel: bool, delta: float) -> void:
 	only_move(speed)
 	direction = sign(speed)
-	#move_and_slide()
-	rotate_around_point(positive, sign(speed), delta)
+	if left_wheel:
+		rotate_left_sign = direction
+	else:
+		rotate_right_sign = direction
+	
+	# Rotation calculation for compound rotations
+	rotation_vel_rad = (rotate_left_sign - rotate_right_sign) * DEFAULT_ROTATION_AMOUNT
 
 # Only move, no rotation
 func only_move(speed: float) -> void:
 	velocity = global_transform.basis.z * speed
 
 # Rotate around point
-func rotate_around_point(positive: bool, direction_pos: float, delta: float) -> void:
-	var mult: float
-	var rot_amount_delta: float = rotation_amount * delta
+func rotate_around_point(delta: float) -> void:
+	#var mult: float
+	#var rot_amount_delta: float = rotation_vel_rad * delta
+	#
+	#if positive:
+		#mult = 1
+		#model.rotate_wheels_const(delta, 0, delta, direction_pos)
+	#else:
+		#model.rotate_wheels(delta, delta, 0, direction_pos)
+		#mult = -1
+		
+	var rot_amount_delta: float = rotation_vel_rad * delta
+	if not is_zero_approx(rot_amount_delta):
+		self.rotate_y(rot_amount_delta)
+		
+	if not is_zero_approx(rotate_right_sign):
+		model.rotate_wheels_const(delta, 1, rotate_right_sign, 0)
 	
-	if positive:
-		mult = 1
-		model.rotate_wheels_const(delta, 0, delta, direction_pos)
-	else:
-		model.rotate_wheels(delta, delta, 0, direction_pos)
-		mult = -1
-	
-	self.rotate_y(mult * rot_amount_delta * delta)
-	
+	if not is_zero_approx(rotate_left_sign):
+		model.rotate_wheels_const(delta, 1, 0, rotate_left_sign)
+		
