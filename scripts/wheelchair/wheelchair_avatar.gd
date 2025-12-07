@@ -46,9 +46,12 @@ func keyboard_input(delta) -> void:
 	elif Input.is_action_pressed("wheelchair_right2_rev"):
 		movement(-speed, false, delta)
 		
+	if Input.is_action_pressed("wheelchair_moving"):
+		only_move(pre_velocity)
+		
 	if (Input.is_action_just_released("wheelchair_left") or Input.is_action_just_released("wheelchair_right") or Input.is_action_just_released("wheelchair_left_rev") or Input.is_action_just_released("wheelchair_right_rev")) and not (Input.is_action_pressed("wheelchair_left") or Input.is_action_pressed("wheelchair_right") or Input.is_action_pressed("wheelchair_left_rev") or Input.is_action_pressed("wheelchair_right_rev")):
 		reset()
-
+		
 # Resets some information
 func reset() -> void:
 	velocity = Vector3.ZERO
@@ -73,7 +76,8 @@ func _physics_process(delta: float) -> void:
 	
 # Movement
 func movement(speed: float, left_wheel: bool, delta: float) -> void:
-	only_move(speed)
+	#only_move(speed)
+	pre_velocity += speed
 	direction = sign(speed)
 	if left_wheel:
 		rotate_left_sign = direction
