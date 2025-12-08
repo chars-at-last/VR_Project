@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://b5h6a7nmpkrqc"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 659.0
+offset_bottom = 457.0
+color = Color(0.08627451, 1, 1, 1)
+
+[node name="Button" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_left = 284.0
+offset_top = 104.0
+offset_right = 360.0
+offset_bottom = 169.0
+text = "Start"
+
+[node name="Button2" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_left = 285.0
+offset_top = 177.0
+offset_right = 361.0
+offset_bottom = 242.0
+text = "Exit
+"
