@@ -1,0 +1,53 @@
+[gd_scene load_steps=10 format=3 uid="uid://bj46cq3iv66i2"]
+
+[ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="1_bodal"]
+[ext_resource type="PackedScene" uid="uid://cnjj6y2u8tkqt" path="res://scenes/player.tscn" id="2_kdmts"]
+[ext_resource type="PackedScene" uid="uid://b4eracafx5w2v" path="res://scenes/menu.tscn" id="3_0auqf"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0xm2m"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_h2yge"]
+sky_material = SubResource("ProceduralSkyMaterial_0xm2m")
+
+[sub_resource type="Environment" id="Environment_1bvp3"]
+background_mode = 2
+sky = SubResource("Sky_h2yge")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g2els"]
+albedo_color = Color(0.76510596, 0.35246193, 0.10139751, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jyhfs"]
+material = SubResource("StandardMaterial3D_g2els")
+size = Vector2(10, 10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jyhfs"]
+points = PackedVector3Array(-5, 0, -5, -5, 0, 5, 5, 0, -5, 5, 0, 5)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1bvp3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="StartXR" parent="." instance=ExtResource("1_bodal")]
+
+[node name="XROrigin3D" parent="." instance=ExtResource("2_kdmts")]
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="StaticBody3D3"]
+mesh = SubResource("PlaneMesh_jyhfs")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
+shape = SubResource("ConvexPolygonShape3D_jyhfs")
+
+[node name="Menu" parent="." instance=ExtResource("3_0auqf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.80075216, -1.0042765)
