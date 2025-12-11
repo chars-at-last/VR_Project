@@ -7,13 +7,14 @@ class_name WheelchairAvatar extends CharacterBody3D
 const DEFAULT_ROTATION_AMOUNT: float = PI / 2
 const FRICTION: float = .1
 const ROTATION_FRICTION: float = 2
-const BASE_SPEED: float = 6.67
+const BASE_SPEED: float = 3.00 #6.67
 
 ## Variables
 @onready var model: WheelchairModel = $WheelchairModel
 @onready var right_wheel_pickable_obj: XRToolsPickable = $RightWheelPickableObj
 @onready var left_wheel_pickable_obj: XRToolsPickable = $LeftWheelPickableObj
-@export var controller: XRController3D
+@export var right_controller: XRController3D
+@export var left_controller: XRController3D
 
 @export var rotation_amount: float = DEFAULT_ROTATION_AMOUNT
 
@@ -82,9 +83,12 @@ func keyboard_input(delta: float) -> void:
 		
 # Joystick movement
 func joystick_input(delta: float) -> void:
+	#print(controller.get_vector2("primary"))
+	#print(controller.get_vector2("secondary"))
+	
 	# Variables
-	var left_influence: float = Input.get_action_strength("wheelchair_left_stick_up") - Input.get_action_strength("wheelchair_left_stick_down") + controller.get_vector2("primary").y
-	var right_influence: float = Input.get_action_strength("wheelchair_right_stick_up") - Input.get_action_strength("wheelchair_right_stick_down") + controller.get_vector2("secondary").y
+	var left_influence: float = Input.get_action_strength("wheelchair_left_stick_up") - Input.get_action_strength("wheelchair_left_stick_down") + right_controller.get_vector2("primary").y
+	var right_influence: float = Input.get_action_strength("wheelchair_right_stick_up") - Input.get_action_strength("wheelchair_right_stick_down") + left_controller.get_vector2("primary").y
 	var influence_active: bool
 	
 	rotate_left_sign = 0
