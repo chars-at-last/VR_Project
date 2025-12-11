@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://43tnhxbke63n"]
+[gd_scene load_steps=7 format=3 uid="uid://43tnhxbke63n"]
 
 [ext_resource type="Script" uid="uid://dva6s6jugqftn" path="res://scripts/wheelchair/wheelchair_avatar.gd" id="1_1kb4e"]
 [ext_resource type="PackedScene" uid="uid://cs6gjkdy8q6vv" path="res://scenes/wheelchair/wheelchair_model.tscn" id="1_08tkx"]
@@ -11,6 +11,11 @@ size = Vector3(2.6071777, 1.067627, 3.8112946)
 resource_local_to_scene = true
 height = 0.5
 radius = 1.25
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ilrkj"]
+top_radius = 1.5
+bottom_radius = 1.5
+height = 0.5
 
 [node name="WheelchairAvatar" type="CharacterBody3D"]
 script = ExtResource("1_1kb4e")
@@ -31,15 +36,22 @@ shape = SubResource("BoxShape3D_1kb4e")
 [node name="RightWheelPickableObj" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5522869, -0.4898001, -1.0100564)
 script = ExtResource("3_ilrkj")
+enabled = false
 metadata/_custom_type_script = "uid://kyyaj2mjm80b"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RightWheelPickableObj"]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.24540424, 0, 0)
 shape = SubResource("CylinderShape3D_l3u5a")
 
+[node name="Temp" type="MeshInstance3D" parent="RightWheelPickableObj"]
+transform = Transform3D(-0.07769345, -0.99697727, 0, 0.99697727, -0.07769345, 0, 0, 0, 1, 0.20110035, 0.013643861, 0)
+visible = false
+mesh = SubResource("CylinderMesh_ilrkj")
+
 [node name="LeftWheelPickableObj" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5599027, -0.4898001, -1.0100564)
 script = ExtResource("3_ilrkj")
+enabled = false
 metadata/_custom_type_script = "uid://kyyaj2mjm80b"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LeftWheelPickableObj"]

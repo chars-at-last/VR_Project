@@ -1,28 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://dgjx4fs2hsurx"]
+[gd_scene load_steps=3 format=3 uid="uid://dgjx4fs2hsurx"]
 
 [ext_resource type="PackedScene" uid="uid://43tnhxbke63n" path="res://scenes/wheelchair/wheelchair_avatar.tscn" id="1_gdyyt"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_1038f"]
 size = Vector2(20, 20)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_fxlgj"]
-size = Vector3(20, 1, 20)
-
 [node name="WheelTestScene" type="Node3D"]
 
 [node name="WheelchairAvatar" parent="." instance=ExtResource("1_gdyyt")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7487588, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.0702517, 0)
 mesh = SubResource("PlaneMesh_1038f")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-collision_layer = 8
-collision_mask = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-shape = SubResource("BoxShape3D_fxlgj")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-0.6902245, -0.5827762, 0.42890796, 0, 0.59274566, 0.80538976, -0.72359526, 0.55589974, -0.4091276, 5.8776712, 11.036904, -5.606605)
