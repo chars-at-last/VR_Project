@@ -17,8 +17,9 @@ top_radius = 1.5
 bottom_radius = 1.5
 height = 0.5
 
-[node name="WheelchairAvatar" type="CharacterBody3D"]
+[node name="WheelchairAvatar" type="CharacterBody3D" node_paths=PackedStringArray("controller")]
 script = ExtResource("1_1kb4e")
+controller = NodePath("XROrigin3D/XRController3D")
 
 [node name="WheelchairModel" parent="." instance=ExtResource("1_08tkx")]
 
@@ -28,6 +29,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, -0.5)
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 current = true
+
+[node name="XRController3D" type="XRController3D" parent="XROrigin3D"]
+tracker = &"head"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.002319336, -1.2606201, -0.38014984)
