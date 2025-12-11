@@ -8,16 +8,41 @@ const DEFAULT_ROTATION_AMOUNT: float = PI / 2
 const FRICTION: float = .1
 const ROTATION_FRICTION: float = 2
 
-# Variables
+## Variables
 @onready var model: WheelchairModel = $WheelchairModel
+@onready var right_wheel_pickable_obj: XRToolsPickable = $RightWheelPickableObj
+@onready var left_wheel_pickable_obj: XRToolsPickable = $LeftWheelPickableObj
 
 @export var rotation_amount: float = DEFAULT_ROTATION_AMOUNT
 
+@export var keyboard_testing: bool = false
+
+# General variables
 var direction: int = 0
 var rotation_vel_rad: float
 var rotate_left_sign: int = 0
 var rotate_right_sign: int = 0
 var pre_velocity: float = 0
+
+# VR-specific variables
+var right_wheel_hitb_starting_pos: Vector3
+var left_wheel_hitb_starting_pos: Vector3
+var right_wheel_hitb_prev_pos: Vector3
+var left_wheel_hitb_prev_pos: Vector3
+
+# Ready function - you know what it is
+func _ready() -> void:
+	right_wheel_hitb_starting_pos = right_wheel_pickable_obj.global_position
+	left_wheel_hitb_starting_pos = left_wheel_pickable_obj.global_position
+	reset_wheel_prev_pos()
+	
+# Resets the previous positions of the wheels (or just right/left)
+func reset_wheel_prev_pos(reset_right: bool = true, reset_left: bool = true) -> void:
+	if reset_right:
+		right_wheel_hitb_prev_pos = right_wheel_hitb_starting_pos
+	
+	if reset_left:
+		left_wheel_hitb_prev_pos = left_wheel_hitb_starting_pos
 
 # Keyboard input - FOR TESTING ONLY !!!
 func keyboard_input(delta) -> void:
@@ -65,7 +90,8 @@ func _physics_process(delta: float) -> void:
 	#rotate_around_point(false, delta)
 	
 	## Testing 2 ##
-	keyboard_input(delta)
+	if keyboard_testing:
+		keyboard_input(delta)
 	
 	## Always-running movement funcitons ##
 	move_and_slide()
